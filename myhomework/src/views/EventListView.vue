@@ -1,34 +1,27 @@
 <!--
  * @Author: kelemengqi 1565916105@qq.com
- * @Date: 2024-10-24 08:13:21
+ * @Date: 2024-10-24 23:37:05
  * @LastEditors: kelemengqi 1565916105@qq.com
- * @LastEditTime: 2024-10-25 11:09:11
- * @FilePath: /lap2/classlab2/vite-project/src/views/HomeView.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<!--
- * @Author: kelemengqi 1565916105@qq.com
- * @Date: 2024-10-24 08:13:21
- * @LastEditors: kelemengqi 1565916105@qq.com
- * @LastEditTime: 2024-10-24 09:51:25
- * @FilePath: /lap2/classlab2/vite-project/src/views/HomeView.vue
+ * @LastEditTime: 2024-10-25 19:14:49
+ * @FilePath: /vite-class-lab2/myhomework/src/views/EventListView.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup lang="ts">
 import EventCard from '@/components/EventCard.vue'
-
+import EventInfo from '@/components/EventInfo.vue'
 import type { Event } from '@/type'
 import { ref } from 'vue'
+
 const events = ref<Event[]>([
   {
     id: 5928101,
     category: 'animal welfare',
-   title: 'Cat Adoption Day',
+    title: 'Cat Adoption Day',
     description: 'Find your new feline friend at this event.',
-   location: 'Meow Town',
+    location: 'Meow Town',
     date: 'January 28, 2022',
     time: '12:00',
-   petsAllowed: true,
+    petsAllowed: true,
     organizer: 'Kat Laydee'
   },
   {
@@ -45,33 +38,37 @@ const events = ref<Event[]>([
   {
     id: 8419988,
     category: 'sustainability',
-   title: 'Beach Cleanup',
-   description: 'Help pick up trash along the shore.',
-   location: 'Playa Del Carmen',
+    title: 'Beach Cleanup',
+    description: 'Help pick up trash along the shore.',
+    location: 'Playa Del Carmen',
     date: 'July 22, 2022',
     time: '11:00',
     petsAllowed: false,
     organizer: 'Carey Wales'
   }
 ])
-
-
 </script>
 
 <template>
-    <h1>Events For Good</h1>
-  <!-- new element -->
-   
+  <h1>Events For Good</h1>
+
   <div class="events">
-    <EventCard v-for="event in events" :key="event.id" :event="event" />
-   </div>
-  
+    <div v-for="event in events" :key="event.id" class="event-container">
+      <EventCard :event="event" />
+      <EventInfo :category="event.category" :organizer="event.organizer" />
+    </div>
+  </div>
 </template>
 
 <style scoped>
 .events {
   display: flex;
- flex-direction: column;
- align-items: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.event-container {
+  margin-bottom: 20px;
+  width: 300px;
 }
 </style>
