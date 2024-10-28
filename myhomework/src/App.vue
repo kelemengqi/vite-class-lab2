@@ -2,7 +2,7 @@
  * @Author: kelemengqi 1565916105@qq.com
  * @Date: 2024-10-24 08:13:21
  * @LastEditors: kelemengqi 1565916105@qq.com
- * @LastEditTime: 2024-10-25 18:55:48
+ * @LastEditTime: 2024-10-28 15:06:35
  * @FilePath: /lap2/classlab2/vite-project/src/App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -18,6 +18,8 @@ import { RouterLink, RouterView } from 'vue-router'
         <nav>
           <RouterLink to="/">Event</RouterLink> |
           <RouterLink to="/about">About</RouterLink>
+          <RouterLink to="/students">student</RouterLink>
+         
         </nav>
       </div>
     </header>
