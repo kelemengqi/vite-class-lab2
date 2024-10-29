@@ -2,12 +2,15 @@
  * @Author: kelemengqi 1565916105@qq.com
  * @Date: 2024-10-24 08:13:21
  * @LastEditors: kelemengqi 1565916105@qq.com
- * @LastEditTime: 2024-10-28 15:06:35
+ * @LastEditTime: 2024-10-29 22:41:00
  * @FilePath: /lap2/classlab2/vite-project/src/App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { ref } from 'vue'
+
+const pageSize = ref(2); // 每页事件数量，可以通过其他方式动态改变
 
 </script>
 
@@ -18,27 +21,23 @@ import { RouterLink, RouterView } from 'vue-router'
         <nav>
           <RouterLink to="/">Event</RouterLink> |
           <RouterLink to="/about">About</RouterLink>
-          <RouterLink to="/students">student</RouterLink>
+          <RouterLink to="/students">Student</RouterLink>
          
         </nav>
       </div>
     </header>
     
-    <RouterView />
+    <RouterView :page-size="pageSize" />
   </div>
 </template>
 
-<style >
-#layout{
- 
-nav a.router-link-exact-active {
- color: #42b983;
- }
- h2{
-  font-size: 20px;
- }
-
-
-
+<style>
+#layout {
+  nav a.router-link-exact-active {
+    color: #42b983;
+  }
+  h2 {
+    font-size: 20px;
+  }
 }
 </style>

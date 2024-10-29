@@ -2,7 +2,7 @@
  * @Author: kelemengqi 1565916105@qq.com
  * @Date: 2024-10-24 23:37:05
  * @LastEditors: kelemengqi 1565916105@qq.com
- * @LastEditTime: 2024-10-28 14:19:16
+ * @LastEditTime: 2024-10-29 22:37:36
  * @FilePath: /vite-class-lab2/myhomework/src/views/EventListView.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -14,6 +14,22 @@
       <EventCard :event="event" />
       <EventInfo :category="event.category" :organizer="event.organizer" />
     </div>
+    <div class="pagination">
+      <RouterLink
+        id="page-prev"
+        :to="{ name: 'event-list-view', query: { page: page - 1, pageSize: props.pageSize } }"
+        rel="prev"
+        v-if="page != 1"
+        >&#60; Prev Page</RouterLink
+      >
+      <RouterLink
+        id="page-next"
+        :to="{ name: 'event-list-view', query: { page: page + 1, pageSize: props.pageSize } }"
+        rel="next"
+        v-if="hasNextPage"
+        >Next Page &#62;</RouterLink
+      >
+    </div>
   </div>
 </template>
 
@@ -21,19 +37,42 @@
 import EventCard from '@/components/EventCard.vue'
 import EventInfo from '@/components/EventInfo.vue'
 import type { Event } from '@/type'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watchEffect } from 'vue'
 import EventService from '@/services/EventService'
 
 const events = ref<Event[]>([])
+const totalEvents = ref(0)
+
+const props = defineProps({
+  page: {
+    type: Number,
+    required: true
+  },
+  pageSize: {
+    type: Number,
+    required: true
+  }
+})
+
+const page = computed(() => props.page)
+
+const hasNextPage = computed(() => {
+  const totalPages = Math.ceil(totalEvents.value / props.pageSize); // 使用 props.pageSize
+  return page.value < totalPages;
+});
 
 onMounted(() => {
-  EventService.getEvents()
-    .then((response) => {
-      events.value = response.data
-    })
-    .catch((error) => {
-      console.error('There was an error!', error)
-    })
+  watchEffect(() => {
+    events.value = []
+    EventService.getEvents(props.pageSize, page.value) // 使用 props.pageSize
+      .then((response) => {
+        events.value = response.data
+        totalEvents.value = parseInt(response.headers['x-total-count'] || '0'); // 确保总事件数被正确解析
+      })
+      .catch((error) => {
+        console.error('There was an error!', error)
+      })
+  })
 })
 </script>
 
@@ -66,18 +105,21 @@ h1 {
   margin-bottom: 20px;
 }
 
-.event-card {
-  padding: 15px;
-  color: #333; /* Dark text for readability */
+.pagination {
+  display: flex;
+  width: 290px;
 }
-
-.event-link {
+.pagination a {
+  flex: 1;
   text-decoration: none;
-  color: #4caf50; /* Bright green for links */
+  color: #2c3e50;
 }
 
-.event-link:hover {
-  color: #2e7d32; /* Darker green on hover */
+#page-prev {
+  text-align: left;
 }
 
+#page-next {
+ text-align: right;
+}
 </style>

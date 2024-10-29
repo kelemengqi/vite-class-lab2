@@ -1,83 +1,77 @@
-@import './base.css';
+/* src/assets/styles.css */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  display: flex; /* 使用 flexbox 进行布局 */
+  flex-direction: column; /* 垂直排列子元素 */
+  align-items: center; /* 使内容居中对齐 */
+  max-width: 1280px; /* 最大宽度 */
+  margin: 0 auto; /* 水平居中 */
+  padding: 2rem; /* 内边距 */
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+.event-container {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  width: 100%; /* 让事件容器宽度为100% */
+  max-width: 300px; /* 设置最大宽度 */
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f4f8;
-    color: #333;
-}
-
-h1, h2, h3 {
-    color: #2c3e50;
-}
-
-a {
-    color: #3498db;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+.event-container:hover {
+  transform: scale(1.05);
 }
 
 .event-card {
-    background-color: #fff;
-    border: 2px solid #2ecc71;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    padding: 15px;
-    transition: transform 0.2s;
-}
-
-.event-card:hover {
-    transform: scale(1.02);
+  border: 2px solid #2c3e50;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #4caf50, #2196f3);
+  color: white;
 }
 
 .event-link {
-    text-decoration: none;
-    color: #2c3e50;
+  text-decoration: none;
+  color: #ffffff;
+  transition: color 0.3s;
 }
 
 .event-link:hover {
-    color: #27ae60;
+  color: #ffeb3b;
 }
 
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center; /* 使分页按钮居中 */
+  margin-top: 20px; /* 添加分页按钮的顶部间距 */
+}
+
+.pagination a {
+  margin: 0 10px; /* 添加分页按钮之间的间距 */
+  padding: 10px 15px; /* 增加分页按钮的内边距 */
+  background-color: #2196f3; /* 分页按钮的背景颜色 */
+  color: white; /* 分页按钮的文本颜色 */
+  border-radius: 5px; /* 分页按钮的圆角 */
+  text-decoration: none; /* 去掉下划线 */
+  transition: background-color 0.3s; /* 平滑的背景颜色过渡 */
+}
+
+.pagination a:hover {
+  background-color: #1976d2; /* 悬停时更深的蓝色 */
 }
