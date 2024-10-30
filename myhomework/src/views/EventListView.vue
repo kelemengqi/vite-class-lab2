@@ -1,11 +1,3 @@
-<!--
- * @Author: kelemengqi 1565916105@qq.com
- * @Date: 2024-10-24 23:37:05
- * @LastEditors: kelemengqi 1565916105@qq.com
- * @LastEditTime: 2024-10-29 22:37:36
- * @FilePath: /vite-class-lab2/myhomework/src/views/EventListView.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
   <h1>Events For Good</h1>
 
@@ -14,21 +6,25 @@
       <EventCard :event="event" />
       <EventInfo :category="event.category" :organizer="event.organizer" />
     </div>
+
     <div class="pagination">
       <RouterLink
         id="page-prev"
         :to="{ name: 'event-list-view', query: { page: page - 1, pageSize: props.pageSize } }"
         rel="prev"
         v-if="page != 1"
-        >&#60; Prev Page</RouterLink
       >
+        &#60; Prev Page
+      </RouterLink>
+
       <RouterLink
         id="page-next"
         :to="{ name: 'event-list-view', query: { page: page + 1, pageSize: props.pageSize } }"
         rel="next"
         v-if="hasNextPage"
-        >Next Page &#62;</RouterLink
       >
+        Next Page &#62;
+      </RouterLink>
     </div>
   </div>
 </template>
@@ -46,28 +42,28 @@ const totalEvents = ref(0)
 const props = defineProps({
   page: {
     type: Number,
-    required: true
+    required: true,
   },
   pageSize: {
     type: Number,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const page = computed(() => props.page)
 
 const hasNextPage = computed(() => {
-  const totalPages = Math.ceil(totalEvents.value / props.pageSize); // 使用 props.pageSize
-  return page.value < totalPages;
-});
+  const totalPages = Math.ceil(totalEvents.value / props.pageSize)
+  return page.value < totalPages
+})
 
 onMounted(() => {
   watchEffect(() => {
     events.value = []
-    EventService.getEvents(props.pageSize, page.value) // 使用 props.pageSize
+    EventService.getEvents(props.pageSize, page.value)
       .then((response) => {
         events.value = response.data
-        totalEvents.value = parseInt(response.headers['x-total-count'] || '0'); // 确保总事件数被正确解析
+        totalEvents.value = parseInt(response.headers['x-total-count'] || '0')
       })
       .catch((error) => {
         console.error('There was an error!', error)
@@ -81,26 +77,26 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f0f8ff; /* Light background for contrast */
+  background-color: #f0f8ff;
   padding: 20px;
 }
 
 .event-container {
   margin-bottom: 20px;
   width: 300px;
-  border: 2px solid #4caf50; /* Bright green border */
+  border: 2px solid #4caf50;
   border-radius: 8px;
-  background-color: #e1f5fe; /* Light blue background */
+  background-color: #e1f5fe;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
 }
 
 .event-container:hover {
-  transform: scale(1.05); /* Scale up on hover */
+  transform: scale(1.05);
 }
 
 h1 {
-  color: #2196f3; /* Bright blue for the main heading */
+  color: #2196f3;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -109,6 +105,7 @@ h1 {
   display: flex;
   width: 290px;
 }
+
 .pagination a {
   flex: 1;
   text-decoration: none;
@@ -120,6 +117,6 @@ h1 {
 }
 
 #page-next {
- text-align: right;
+  text-align: right;
 }
 </style>
