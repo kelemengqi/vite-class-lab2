@@ -22,6 +22,7 @@
   import StudentService from '@/services/StudentService';
   import type { Student } from '@/type';
   
+  
   const students = ref<Student[]>([]);
   
   onMounted(() => {
