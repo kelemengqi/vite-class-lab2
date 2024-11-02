@@ -32,7 +32,8 @@
 <script setup lang="ts">
 import EventCard from '@/components/EventCard.vue'
 import EventInfo from '@/components/EventInfo.vue'
-import type { Event } from '@/type'
+import type { Event } from '@/types'
+// import nProgress from 'nprogress'
 import { ref, onMounted, computed, watchEffect } from 'vue'
 import EventService from '@/services/EventService'
 
@@ -59,7 +60,8 @@ const hasNextPage = computed(() => {
 
 onMounted(() => {
   watchEffect(() => {
-    events.value = []
+    //events.value = []
+    
     EventService.getEvents(props.pageSize, page.value)
       .then((response) => {
         events.value = response.data
@@ -68,6 +70,7 @@ onMounted(() => {
       .catch((error) => {
         console.error('There was an error!', error)
       })
+      
   })
 })
 </script>

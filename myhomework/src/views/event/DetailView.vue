@@ -9,7 +9,7 @@
 <script setup lang="ts">
 
 import { toRefs, defineProps } from 'vue'
-import  { type Event} from '@/type'
+import  { type Event} from '@/types'
 
 
 const props = defineProps<{

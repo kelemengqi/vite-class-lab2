@@ -8,7 +8,7 @@
 -->
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import {type Event } from '@/type'
+import {type Event } from '@/types'
 defineProps<{
  event: Event
 }>()
