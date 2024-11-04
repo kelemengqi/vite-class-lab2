@@ -1,17 +1,9 @@
-<!--
- * @Author: kelemengqi 1565916105@qq.com
- * @Date: 2024-10-24 23:37:05
- * @LastEditors: kelemengqi 1565916105@qq.com
- * @LastEditTime: 2024-11-01 10:56:01
- * @FilePath: /vite-class-lab2/myhomework/src/App.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <script setup lang="ts">
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { ref } from 'vue'
-
 import { useMessageStore } from '@/stores/message'
 import { storeToRefs } from 'pinia'
+
 const store = useMessageStore()
 const { message } = storeToRefs(store)
 const router = useRouter()
@@ -23,22 +15,20 @@ const updatePageSize = () => {
 </script>
 
 <template>
-  <div id="layout">
+  <div class="text-center font-sans text-gray-700 antialias">
     <header>
-      <div id="flashMessage" v-if="message">
+      <div id="flashMessage" class="animate-fade" v-if="message">
         <h4>{{ message }}</h4>
       </div>
-      <div class="wrapper">
-        <nav>
-          <RouterLink to="/">Event</RouterLink> |
-          <RouterLink to="/about">About</RouterLink> |
-          <RouterLink to="/students">Student</RouterLink>|
-        </nav>
-      </div>
+      <nav class="py-6">
+        <RouterLink class="font-bold text-gray-700 hover:text-green-500" :to="{ name: 'event-list-view' }">Event</RouterLink> |
+        <RouterLink class="font-bold text-gray-700 hover:text-green-500" :to="{ name: 'about' }">About</RouterLink> |
+        <RouterLink class="font-bold text-gray-700 hover:text-green-500" to="/students">Student</RouterLink>
+      </nav>
     </header>
 
     <main>
-      <select id="pageSize" v-model="pageSize" @change="updatePageSize">
+      <select id="pageSize" v-model="pageSize" @change="updatePageSize" class="mb-4 p-2 border rounded">
         <option :value="1">1</option>
         <option :value="2">2</option>
         <option :value="4">4</option>
@@ -50,24 +40,8 @@ const updatePageSize = () => {
   </div>
 </template>
 
-<style>
-#layout {
-  nav a.router-link-exact-active {
-    color: #42b983;
-  }
-  h2 {
-    font-size: 20px;
-  }
-  @keyframes yellofade {
- from {
-    background-color: yellow;
-  }
-  to {
-    background-color: transparent;
-  }
-}
+<style scoped>
 #flashMessage {
-  animation: yellofade 3s ease-in-out;
-}
+  @apply animate-fade; /* 确保使用 Tailwind 的动画类 */
 }
 </style>

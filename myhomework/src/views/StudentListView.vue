@@ -1,74 +1,70 @@
-<!--
- * @Author: kelemengqi 1565916105@qq.com
- * @Date: 2024-10-26 15:59:26
- * @LastEditors: kelemengqi 1565916105@qq.com
- * @LastEditTime: 2024-10-29 11:38:52
- * @FilePath: /vite-class-lab2/myhomework/src/views/StudentListView.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
-    <h1>Students List</h1>
-  
-    <div class="students">
-      <div v-for="student in students" :key="student.id" class="student-card">
-        <h2>{{ student.name }} {{ student.surname }}</h2>
-        <p>GPA: {{ student.gpa }}</p>
-      </div>
-    </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
-  import StudentService from '@/services/StudentService';
-  import type { Student } from '@/types';
-  
-  
-  const students = ref<Student[]>([]);
-  
-  onMounted(() => {
-    StudentService.getStudents()
-      .then((response) => {
-        students.value = response.data;
-      })
-      .catch((error) => {
-        console.error('Error loading students:', error);
-      });
-  });
+  <h1 class="text-2xl text-blue-600 text-center mb-4">Students List</h1>
 
-  
-  </script>
-  
-  <style scoped>
-  .students {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .student-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 12px;
-    width: 300px;
-    text-align: center;
-  }
-  .pagination {
-     display: flex;
-      width: 290px;
-    }
-    .pagination a {
-      flex: 1;
-      text-decoration: none;
-      color: #2c3e50;
-    }
-    
-    #page-prev {
-      text-align: left;
-    }
-    
-    #page-next {
-      text-align: right;
-    }
-  </style>
-  
+  <div class="flex flex-col items-center">
+    <div v-for="student in students" :key="student.id" class="student-card mb-4">
+      <h2 class="font-semibold text-lg">{{ student.name }} {{ student.surname }}</h2>
+      <p class="text-sm">GPA: {{ student.gpa }}</p>
+    </div>
+
+    <div class="pagination flex space-x-4">
+      <RouterLink
+        id="page-prev"
+        :to="{ name: 'student-list-view', query: { page: page - 1 } }"
+        rel="prev"
+        v-if="page > 1"
+        class="text-blue-500 hover:underline"
+      >
+        &#60; Prev Page
+      </RouterLink>
+
+      <RouterLink
+        id="page-next"
+        :to="{ name: 'student-list-view', query: { page: page + 1 } }"
+        rel="next"
+        v-if="hasNextPage"
+        class="text-blue-500 hover:underline"
+      >
+        Next Page &#62;
+      </RouterLink>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted, computed } from 'vue'
+import StudentService from '@/services/StudentService'
+import type { Student } from '@/types'
+
+const students = ref<Student[]>([])
+const page = ref(1) // 定义 page 响应式变量
+
+// 计算总学生数量和是否有下一页
+const totalStudents = ref(0) // 可以根据实际情况获取总学生数量
+const pageSize = 10 // 每页显示的学生数量
+
+const hasNextPage = computed(() => {
+  return totalStudents.value > page.value * pageSize
+})
+
+onMounted(() => {
+  StudentService.getStudents()
+    .then((response) => {
+      students.value = response.data
+      totalStudents.value = response.headers['x-total-count'] || 0 // 获取总学生数量
+    })
+    .catch((error) => {
+      console.error('Error loading students:', error)
+    })
+})
+</script>
+
+<style scoped>
+.student-card {
+  @apply border border-gray-300 rounded-lg p-4 mb-3 w-72 text-center shadow-md transition-transform duration-200;
+}
+
+.student-card:hover {
+  @apply transform scale-105;
+}
+</style>

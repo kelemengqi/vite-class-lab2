@@ -1,56 +1,23 @@
-<!--
- * @Author: kelemengqi 1565916105@qq.com
- * @Date: 2024-10-24 23:37:05
- * @LastEditors: kelemengqi 1565916105@qq.com
- * @LastEditTime: 2024-10-29 10:05:13
- * @FilePath: /vite-class-lab2/myhomework/src/components/EventCard.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import {type Event } from '@/types'
-defineProps<{
- event: Event
-}>()
-// const event = ref({
-//   id: 5928101,
-//   category: 'animal welfare',
-//   title: 'Cat Adoption Day',
-//   description: 'Find your new feline friend at this event.',
-//   location: 'Meow Town',
-//   date: 'January 28, 2022',
-//   time: '12:00',
-//   petsAllowed: true,
-//   organizer: 'Kat Laydee'
-//})
+import { type Event } from '@/types'
 
+defineProps<{
+  event: Event
+}>()
 </script>
 
 <template>
-
-<RouterLink class="event-link" :to="{ name: 'event-detail-view', params: { id: event.id } }">
-    <div class="event-card">
-     <h2>{{ event.title }}</h2>
-     <span>@{{ event.time }} on {{ event.date }}</span>
+  <RouterLink class="event-link" :to="{ name: 'event-detail-view', params: { id: event.id } }">
+    <div class="border border-gray-600 p-5 w-60 mb-5 hover:scale-105 hover:shadow-sp transition-transform duration-300 cursor-pointer">
+      <h2 class="font-semibold text-lg">{{ event.title }}</h2>
+      <span class="text-sm">@{{ event.time }} on {{ event.date }}</span>
     </div>
   </RouterLink>
 </template>
+
 <style scoped>
-.event-card{
-  padding:20px;
-  width:250px;
-  cursor:pointer;
-  border: 1px solid #39495c;
- margin-bottom: 18px;
-}
-.event-card:hover {
-  transform: scale(1.01);
-  box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
-}
 .event-link {
-  text-decoration: none;
-  color: #2c3e50;
+  @apply text-gray-700 no-underline;
 }
 </style>
-
-

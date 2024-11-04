@@ -1,18 +1,18 @@
 <template>
-  <h1>Events For Good</h1>
-
-  <div class="events">
-    <div v-for="event in events" :key="event.id" class="event-container">
+  <h1 class="text-2xl text-blue-600 text-center mb-4">Events For Good</h1>
+  <div class="flex flex-col items-center">
+    <div v-for="event in events" :key="event.id" class="event-container mb-4">
       <EventCard :event="event" />
       <EventInfo :category="event.category" :organizer="event.organizer" />
     </div>
 
-    <div class="pagination">
+    <div class="flex space-x-4">
       <RouterLink
         id="page-prev"
         :to="{ name: 'event-list-view', query: { page: page - 1, pageSize: props.pageSize } }"
         rel="prev"
         v-if="page != 1"
+        class="text-blue-500"
       >
         &#60; Prev Page
       </RouterLink>
@@ -22,6 +22,7 @@
         :to="{ name: 'event-list-view', query: { page: page + 1, pageSize: props.pageSize } }"
         rel="next"
         v-if="hasNextPage"
+        class="text-blue-500"
       >
         Next Page &#62;
       </RouterLink>
@@ -33,7 +34,6 @@
 import EventCard from '@/components/EventCard.vue'
 import EventInfo from '@/components/EventInfo.vue'
 import type { Event } from '@/types'
-// import nProgress from 'nprogress'
 import { ref, onMounted, computed, watchEffect } from 'vue'
 import EventService from '@/services/EventService'
 
@@ -60,8 +60,6 @@ const hasNextPage = computed(() => {
 
 onMounted(() => {
   watchEffect(() => {
-    //events.value = []
-    
     EventService.getEvents(props.pageSize, page.value)
       .then((response) => {
         events.value = response.data
@@ -70,56 +68,16 @@ onMounted(() => {
       .catch((error) => {
         console.error('There was an error!', error)
       })
-      
   })
 })
 </script>
 
 <style scoped>
-.events {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f0f8ff;
-  padding: 20px;
-}
-
 .event-container {
-  margin-bottom: 20px;
-  width: 300px;
-  border: 2px solid #4caf50;
-  border-radius: 8px;
-  background-color: #e1f5fe;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+  @apply mb-5 border-2 border-green-500 rounded-lg bg-blue-100 shadow-md transition-transform duration-300;
 }
 
 .event-container:hover {
-  transform: scale(1.05);
-}
-
-h1 {
-  color: #2196f3;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.pagination {
-  display: flex;
-  width: 290px;
-}
-
-.pagination a {
-  flex: 1;
-  text-decoration: none;
-  color: #2c3e50;
-}
-
-#page-prev {
-  text-align: left;
-}
-
-#page-next {
-  text-align: right;
+  @apply transform scale-105;
 }
 </style>
