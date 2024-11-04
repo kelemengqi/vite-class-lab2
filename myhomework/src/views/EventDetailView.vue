@@ -51,7 +51,8 @@ onMounted(() => {
     <div id="flashMessage" v-if="store.message">
       <h4>{{ store.message }}</h4>
     </div>
-  </div>
+    <h1>Deploy with Vercel</h1>
+  </div >
 </template>
 
 <style scoped>
