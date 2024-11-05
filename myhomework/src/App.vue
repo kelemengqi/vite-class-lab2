@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { RouterLink, RouterView, useRouter, useRoute } from 'vue-router'
 import { ref } from 'vue'
 import { useMessageStore } from '@/stores/message'
 import { storeToRefs } from 'pinia'
@@ -7,7 +7,8 @@ import { storeToRefs } from 'pinia'
 const store = useMessageStore()
 const { message } = storeToRefs(store)
 const router = useRouter()
-const pageSize = ref(2) // 默认每页大小为233
+const route = useRoute()  // 获取当前路由信息
+const pageSize = ref(2) // 默认每页大小为2
 
 const updatePageSize = () => {
   router.push({ name: 'event-list-view', query: { page: 1, pageSize: pageSize.value } })
@@ -29,12 +30,15 @@ const updatePageSize = () => {
     </header>
 
     <main>
-      <select id="pageSize" v-model="pageSize" @change="updatePageSize" class="mb-4 p-2 border rounded">
-        <option :value="1">1</option>
-        <option :value="2">2</option>
-        <option :value="4">4</option>
-        <option :value="8">8</option>
-      </select>
+      <!-- 仅在 event-list-view 页面时显示调整页面大小的按钮 -->
+      <div v-if="route.name === 'event-list-view'">
+        <select id="pageSize" v-model="pageSize" @change="updatePageSize" class="mb-4 p-2 border rounded">
+          <option :value="1">1</option>
+          <option :value="2">2</option>
+          <option :value="4">4</option>
+          <option :value="8">8</option>
+        </select>
+      </div>
 
       <RouterView :page-size="pageSize" />
     </main>
