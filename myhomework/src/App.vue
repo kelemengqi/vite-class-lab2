@@ -7,7 +7,7 @@ import { storeToRefs } from 'pinia'
 const store = useMessageStore()
 const { message } = storeToRefs(store)
 const router = useRouter()
-const pageSize = ref(2) // 默认每页大小为2
+const pageSize = ref(2) // 默认每页大小为233
 
 const updatePageSize = () => {
   router.push({ name: 'event-list-view', query: { page: 1, pageSize: pageSize.value } })
